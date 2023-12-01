@@ -13,14 +13,41 @@
           crossorigin="anonymous">
 
     <!-- Optional: Custom CSS Link -->
-    <link href="path/to/your/custom.css" rel="stylesheet">
+    <link href="custom.css" rel="stylesheet">
 
     <!-- Optional: Favicon -->
     <link rel="icon" href="path/to/favicon.ico" type="image/x-icon">
 
    </head>
 <body>
-
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">IT Conference</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_records.php">View Database Records</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_record.php">View One Record's Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="update_record.php">Update Database Records</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="delete_record.php">Delete Database Records</a>
+                </li>
+            </ul>
+            <!-- ... existing search form ... -->
+        </div>
+    </div>
+</nav>
 
 
 

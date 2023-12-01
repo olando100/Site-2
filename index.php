@@ -6,7 +6,7 @@ require_once 'db/conn.php';
 
 <h1 class="text-center">Registration for IT Conference</h1>
 
-<form action="successpost.php" method="post">
+<form action="successpost.php" method="POST">
         
     <label for="firstName">First Name:</label>
     <input type="text" class="form-control" id="firstName" name="firstName" required><br>
@@ -22,16 +22,16 @@ require_once 'db/conn.php';
 
     <label for="specialty">Specialty:</label>
     <select id="specialty" name="specialty" class="form-control" required>
-        <option value="" disabled selected>Select your specialty</option>
-        <option value="1">Database Admin</option>
-        <option value="2">Software Developer</option>
-        <option value="3">Web Administrator</option>
-        <option value="4">Other</option>
+    <option value="" disabled selected>Select your specialty</option>
+    <option value="1">Database Admin</option>
+    <option value="2">Software Developer</option>
+    <option value="3">Web Administrator</option>
+    <option value="4">Other</option>
     </select><br>
     
 
     <label for="email">Email Address:</label>
-    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+    <input type="email" class="form-control" id="email" name="emai" aria-describedby="emailHelp" placeholder="Enter email" required>
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> <br>
     
 

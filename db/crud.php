@@ -1,18 +1,17 @@
 <?php   
-
 class crud {      
-
     private $db;
 
     function __construct($conn) {    
         $this->db = $conn;  
     }
     
-    public function insert($firstName, $lastName, $dob, $email, $contactNumber, $specialty) {
+    // Insert a new attendee
+    public function insert($firstName, $lastName, $dob, $emai, $contactNumber, $specialty) {
         try {
-            $sql = "INSERT INTO attendees (first_name, last_name, date_of_birth, email, contact_number, specialty) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO attendee (first_name, last_name, dateofbirth, emai, contact_number, specialty) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([$firstName, $lastName, $dob, $email, $contactNumber, $specialty]);
+            $stmt->execute([$firstName, $lastName, $dob, $emai, $contactNumber, $specialty]);
             return true;
         } catch (PDOException $e) {
             error_log($e->getMessage());
@@ -20,9 +19,10 @@ class crud {
         }
     }
 
+    // Read all attendees
     public function readAll() {
         try {
-            $sql = "SELECT * FROM attendees";
+            $sql = "SELECT * FROM attendee";
             $stmt = $this->db->query($sql);
             return $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -31,11 +31,12 @@ class crud {
         }
     }
 
-    public function update($id, $firstName, $lastName, $dob, $email, $contactNumber, $specialty) {
+    // Update an attendee
+    public function update($id, $firstName, $lastName, $dob, $emai, $contactNumber, $specialty) {
         try {
-            $sql = "UPDATE attendees SET first_name = ?, last_name = ?, date_of_birth = ?, email = ?, contact_number = ?, specialty = ? WHERE id = ?";
+            $sql = "UPDATE attendee SET first_name = ?, last_name = ?, dateofbirth = ?, emai = ?, contact_number = ?, specialty = ? WHERE attendee_id = ?";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([$firstName, $lastName, $dob, $email, $contactNumber, $specialty, $id]);
+            $stmt->execute([$firstName, $lastName, $dob, $emai, $contactNumber, $specialty, $id]);
             return $stmt->rowCount();
         } catch (PDOException $e) {
             error_log($e->getMessage());
@@ -43,9 +44,10 @@ class crud {
         }
     }
 
+    // Delete an attendee
     public function delete($id) {
         try {
-            $sql = "DELETE FROM attendees WHERE id = ?";
+            $sql = "DELETE FROM attendee WHERE attendee_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$id]);
             return $stmt->rowCount();
@@ -54,7 +56,19 @@ class crud {
             return false;
         }
     }
-}
 
+    // Get details of an attendee
+    public function getAttendeeDetails($id) {
+        try {
+            $sql = "SELECT * FROM attendee WHERE attendee_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+}
 
 ?>
