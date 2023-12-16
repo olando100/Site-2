@@ -14,16 +14,14 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+ } catch (PDOException $e){
+
+    throw new PDOException($e->getMessage());
+
+
+ }
     require_once 'crud.php'; // Assuming 'Crud.php' is the correct file name
     $crud = new crud($pdo);
 
-} catch (PDOException $e) { 
-    // Log the error
-    error_log($e->getMessage());
-    // Display a user-friendly message
-    http_response_code(500);
-    echo "Database connection failed. Please try again later.";
-    exit;
-}
 
 ?>

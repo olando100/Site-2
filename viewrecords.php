@@ -1,10 +1,10 @@
 <?php 
-$title = 'View Records';   
+$title = 'View Applications';   
 require_once 'includes/header.php'; 
 require_once 'db/conn.php'; 
 
 // Fetch all records from the database
-$attendees = $crud->readAll();
+$attendees = $crud->getAttendee();
 ?>
 
 <h1 class="text-center">Attendee Records</h1>
@@ -23,7 +23,7 @@ $attendees = $crud->readAll();
             </tr>
         </thead>
         <tbody>
-            <?php foreach($attendees as $attendee) { ?>
+            <?php foreach ($attendees as $attendee) { ?>
                 <tr>
                     <td><?php echo htmlspecialchars($attendee['attendee_id']); ?></td>
                     <td><?php echo htmlspecialchars($attendee['first_name']); ?></td>
