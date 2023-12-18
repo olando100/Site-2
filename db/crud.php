@@ -130,7 +130,7 @@ class crud {
             return false;
         }
     }
-
+//sir 
 
     public function getSpecialtyById($id){
         try{
