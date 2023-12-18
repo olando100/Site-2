@@ -1,75 +1,72 @@
-<?php 
-    $title = 'Edit';
-    require_once 'includes/header.php';
-    require_once 'db/conn.php';
+    
+<?php
+    $title = 'Edit Record'; 
 
-    $occupationresults =$crud -> getSpecialties();
-       
-    if(!isset($_GET['attendeeid'])){
-       // echo "<h1 class ='text-danger'> Please check details </h1>"; 
-       include 'includes/errormessage.php';
-      
+    require_once 'includes/header.php'; 
+    require_once 'includes/auth_check.php';
+    require_once 'db/conn.php'; 
+
+    $results = $crud->getSpecialties();
+
+    if(!isset($_GET['id']))
+    {
+        //echo 'error';
+        include 'includes/errormessage.php';
+        header("Location: viewrecords.php");
     }
     else{
-        $id = $_GET['attendeeid'];
-        $result = $crud->getAttendee();       
+        $id = $_GET['id'];
+        $attendee = $crud->getAttendeeDetails($id);
+    
+
+    
 ?>
 
-    <h1 class = "text-center" >Edit Attendee</h1>
+    <h1 class="text-center">Edit Record </h1>
 
-    <form method ="post" action = "editpost.php">
-        <input type="hidden" name="attendeeid" value="<?php echo $result['attendee_id'] ?>" />
+    <form method="post" action="editpost.php">
+        <input type="hidden" name="id" value="<?php echo $attendee['attendee_id'] ?>" />
         <div class="form-group">
-            <label for="FirstName">First Name</label>
-            <input type="text" class="form-control" value ="<?php echo $result['firstname'] ?>" id="FirstName" name ="FirstName">
-            <small id="FNameHelp" class="form-text text-muted">Please enter your first name.</small>
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" value="<?php echo $attendee['firstname'] ?>" id="firstname" name="firstname">
         </div>
-
         <div class="form-group">
-        <label for="LastName">Last Name</label>
-            <input type="text" class="form-control" value =" <?php echo $result['lastname'] ?> " id="LastName" name="LastName">
-            <small id="LNameHelp" class="form-text text-muted">Please enter your last name.</small>
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" value="<?php echo $attendee['lastname'] ?>" id="lastname" name="lastname">
         </div>
-
         <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="text" class="form-control" value ="<?php echo $result['dateofbirth'] ?>" id="dob" name="dob">
-            <small id="dateofbirthHelp" class="form-text text-muted">Please enter your date of birth.</small>
+            <label for="dob">Date Of Birth</label>
+            <input type="text" class="form-control" value="<?php echo $attendee['dateofbirth'] ?>" id="dob" name="dob">
         </div>
-
         <div class="form-group">
-            <label for="Email1">Email address</label>
-            <input type="email" class="form-control" value ="<?php echo $result['email'] ?> "id="Email1" 
-            aria-describedby="emailHelp" placeholder="Enter email" name="Email1">
-            <small id="emailHelp" class="form-text text-muted">Please enter your email address.</small>
+            <label for="specialty">Area of Expertise</label>
+            <select class="form-control" id="specialty" name="specialty">
+                <?php while($r = $results->fetch(PDO::FETCH_ASSOC)) {?>
+                   <option value="<?php echo $r['specialty_id'] ?>" <?php if($r['specialty_id'] == $attendee['specialty_id']) echo 'selected' ?>>
+                        <?php echo $r['name']; ?>
+                   </option>
+                <?php }?>
+            </select>
         </div>
-
         <div class="form-group">
-            <label for="contactnumber">Contact Number</label>
-            <input type="text" class="form-control" value ="<?php echo $result['contactNumber'] ?>" id="contactNumber" name="contactNumber">
-            <small id="contactHelp" class="form-text text-muted">Please enter your contact number.</small>
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" value="<?php echo $attendee['emailaddress'] ?>" name="email" aria-describedby="emailHelp" >
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
-
         <div class="form-group">
-            <label for="speciality">Speciality</label>
-            <select class="form-control" id="speciality" name="speciality">
-            <?php while($r = $specialityresults->fetch(PDO::FETCH_ASSOC)){ ?>
-                <option value ="<?php echo $r['speciality_id']?>"
-                <?php if ($r['speciality'] == $result['speciality']) echo 'selected' ?>>
-                <?php echo $r['speciality'];?>
-                </option>
-                <?php } ?>
-    </select>
-            <small id="speciality" class="form-text text-muted">Please select your speciality.</small>
+            <label for="phone">Contact Number</label>
+            <input type="text" class="form-control" id="phone" value="<?php echo $attendee['contactnumber'] ?>" name="phone" aria-describedby="phoneHelp" >
+            <small id="phoneHelp" class="form-text text-muted">We'll never share your number with anyone else.</small>
         </div>
-        <a href ="viewrecords.php" class="btn btn-default">Back to List</a>
-        <button type="submit" name = "submit" class="btn btn-success btn">Save Changes</button>
-      
+        
+        <a href="viewrecords.php" class="btn btn-default">Back To List</a>
+        <button type="submit" name="submit" class="btn btn-success">Save Changes</button>
     </form>
 
-    <?php } ?>
-       <br>
-       <br>
-       <br>
-
+<?php } ?>
+<br>
+<br>
+<br>
+<br>
+<br>
 <?php require_once 'includes/footer.php'; ?>

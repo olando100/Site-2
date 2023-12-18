@@ -7,51 +7,72 @@ class crud {
     }
 
     // Insert a new attendee
-    public function insert($firstName, $lastName, $dob, $emai, $specialty, $contactNumber) {
+    public function insertAttendees($fname, $lname, $dob, $email,$contact,$specialty){
         try {
-            $sql = "INSERT INTO attendee (first_name, last_name, dateofbirth, emai, specialty_id, contact_number) VALUES (:fname, :lname, :dob, :emai, :specialty, :contact)";
+            // define sql statement to be executed
+            $sql = "INSERT INTO attendee (firstname,lastname,dateofbirth,emailaddress,contactnumber,specialty_id,avatar_path) VALUES (:fname,:lname,:dob,:email,:contact)";
+            //prepare the sql statement for execution
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':fname', $firstName);
-            $stmt->bindParam(':lname', $lastName);
-            $stmt->bindParam(':dob', $dob);
-            $stmt->bindParam(':emai', $emai);
-            $stmt->bindParam(':specialty', $specialty);
-            $stmt->bindParam(':contact', $contactNumber);
+            // bind all placeholders to the actual values
+            $stmt->bindparam(':fname',$fname);
+            $stmt->bindparam(':lname',$lname);
+            $stmt->bindparam(':dob',$dob);
+            $stmt->bindparam(':email',$email);
+            $stmt->bindparam(':contact',$contact);
+            $stmt->bindparam(':specialty',$specialty);
+           
 
+            // execute statement
             $stmt->execute();
             return true;
-
+    
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
 
-    public function edit($id, $firstName, $lastName, $dob, $emai, $specialty, $contactNumber) {
-        try {
-            $sql = "UPDATE attendee SET first_name = :fname, last_name = :lname, dateofbirth = :dob, emai = :emai, specialty_id = :specialty, contact_number = :contact WHERE attendee_id = :attendeeid";
+    public function editAttendee($id,$fname, $lname, $dob, $email,$contact,$specialty){
+        try{ 
+             $sql = "UPDATE `attendee` SET `firstname`=:fname,`lastname`=:lname,`dateofbirth`=:dob,`emailaddress`=:email,`contactnumber`=:contact,`specialty_id`=:specialty WHERE attendee_id = :id ";
+             $stmt = $this->db->prepare($sql);
+             // bind all placeholders to the actual values
+             $stmt->bindparam(':id',$id);
+             $stmt->bindparam(':fname',$fname);
+             $stmt->bindparam(':lname',$lname);
+             $stmt->bindparam(':dob',$dob);
+             $stmt->bindparam(':email',$email);
+             $stmt->bindparam(':contact',$contact);
+             $stmt->bindparam(':specialty',$specialty);
 
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':fname', $firstName);
-            $stmt->bindParam(':lname', $lastName);
-            $stmt->bindParam(':dob', $dob);
-            $stmt->bindParam(':emai', $emai);
-            $stmt->bindParam(':specialty', $specialty);
-            $stmt->bindParam(':contact', $contactNumber);
-            $stmt->bindParam(':attendeeid', $id);
-
-            $stmt->execute();
-            return true;
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
+             // execute statement
+             $stmt->execute();
+             return true;
+        }catch (PDOException $e) {
+         echo $e->getMessage();
+         return false;
         }
-    }
+         
+     }
+
+    public function getAttendeeDetails($id){
+        try{
+             $sql = "select * from attendee a inner join specialties s on a.specialty_id = s.specialty_id 
+             where attendee_id = :id";
+             $stmt = $this->db->prepare($sql);
+             $stmt->bindparam(':id', $id);
+             $stmt->execute();
+             $result = $stmt->fetch();
+             return $result;
+        }catch (PDOException $e) {
+             echo $e->getMessage();
+             return false;
+         }
+     }
 
     public function getAttendee() {
         try {
-            $sql = "SELECT * FROM `attendee` a INNER JOIN specialty o ON a.specialty_id = o.specialty_id";
+            $sql = "SELECT * FROM `attendee` a INNER JOIN specialties o ON a.specialty_id = o.specialty_id";
             $result = $this->db->query($sql);
             return $result;
         } catch (PDOException $e) {
@@ -101,7 +122,7 @@ class crud {
 
     public function getSpecialties() {
         try {
-            $sql = "SELECT * FROM `specialty`";
+            $sql = "SELECT * FROM `specialties`";
             $result = $this->db->query($sql);
             return $result;
         } catch (PDOException $e) {
@@ -109,5 +130,25 @@ class crud {
             return false;
         }
     }
+
+
+    public function getSpecialtyById($id){
+        try{
+            $sql = "SELECT * FROM `specialties` where specialty_id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindparam(':id', $id);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result;
+        }catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+        
+    }
 }
+
+
+
+
 ?>

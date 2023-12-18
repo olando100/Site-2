@@ -1,41 +1,39 @@
-<?php 
-$title = 'View Applications';   
-require_once 'includes/header.php'; 
-require_once 'db/conn.php'; 
+<?php
+    $title = 'View Records'; 
 
-// Fetch all records from the database
-$attendees = $crud->getAttendee();
+    require_once 'includes/header.php'; 
+    
+    require_once 'db/conn.php'; 
+
+    // Get all attendees
+    $results = $crud->getAttendees();
 ?>
 
-<h1 class="text-center">Attendee Records</h1>
 
-<div class="container mt-4">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Date of Birth</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Specialty</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($attendees as $attendee) { ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($attendee['attendee_id']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['first_name']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['last_name']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['dateofbirth']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['emai']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['contact_number']); ?></td>
-                    <td><?php echo htmlspecialchars($attendee['specialty']); ?></td>
-                </tr>
-            <?php } ?>
-        </tbody>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Specialty</th>
+            <th>Actions</th>
+        </tr>
+        <?php while($r = $results->fetch(PDO::FETCH_ASSOC)) { ?>
+           <tr>
+                <td><?php echo $r['attendee_id'] ?></td>
+                <td><?php echo $r['firstname'] ?></td>
+                <td><?php echo $r['lastname'] ?></td>
+                <td><?php echo $r['specialty_id'] ?></td>
+                <td>
+                    <a href="view.php?id=<?php echo $r['attendee_id'] ?>" class="btn btn-primary">View</a>
+                    <a href="edit.php?id=<?php echo $r['attendee_id'] ?>" class="btn btn-warning">Edit</a>
+                    <a onclick="return confirm('Are you sure you want to delete this record?');" href="delete.php?id=<?php echo $r['attendee_id'] ?>" class="btn btn-danger">Delete</a>
+                </td>
+           </tr> 
+        <?php }?>
     </table>
-</div>
 
+<br>
+<br>
+<br>
 <?php require_once 'includes/footer.php'; ?>

@@ -25,14 +25,10 @@ $specialtyresults = $crud->getSpecialties();
     <label for="specialty">Specialty:</label>
     <select id="specialty" name="specialty" class="form-control" required>
     <?php while($r = $specialtyresults->fetch(PDO::FETCH_ASSOC)){ ?>
-                <option value ="<?php echo $r['specialty_id'] ?>"><?php echo $r['specialty'];?></option>
+                <option value ="<?php echo $r['specialty_id'] ?>"><?php echo $r['name'];?></option>
                 <?php } ?>
             
-    <option value="" disabled selected>Select your specialty</option>
-    <option value="1">Database Admin</option>
-    <option value="2">Software Developer</option>
-    <option value="3">Web Administrator</option>
-    <option value="4">Other</option>
+   
 
 
     </select><br>
