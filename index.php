@@ -8,7 +8,7 @@ $specialtyresults = $crud->getSpecialties();
 
 <h1 class="text-center">Registration for IT Conference</h1>
 
-<form action="successpost.php" method="POST">
+<form action="success.php" method="POST">
         
     <label for="firstName">First Name:</label>
     <input type="text" class="form-control" id="firstName" name="firstName" required><br>
@@ -26,12 +26,9 @@ $specialtyresults = $crud->getSpecialties();
     <select id="specialty" name="specialty" class="form-control" required>
     <?php while($r = $specialtyresults->fetch(PDO::FETCH_ASSOC)){ ?>
                 <option value ="<?php echo $r['specialty_id'] ?>"><?php echo $r['name'];?></option>
-                <?php } ?>
+                <?php }?>
             
-   
-
-
-    </select><br>
+            </select><br>
     
 
     <label for="email">Email Address:</label>

@@ -10,18 +10,18 @@
         $lname = $_POST['lastname'];
         $dob = $_POST['dob'];
         $email = $_POST['email'];
-        $contact = $_POST['phone'];
+        $contact = $_POST['contact'];
         $specialty = $_POST['specialty'];
 
     }
         //Call function to insert and track if success or not
-        $isSuccess = $crud->insertAttendees($fname, $lname, $dob, $email,$contact,$specialty,$destination);
+        $isSuccess = $crud->insertAttendees($fname, $lname, $dob, $email,$contact,$specialty);
         $specialtyName = $crud->getSpecialtyById($specialty);
         
 ?>
     
 
-    <img src="<?php echo $destination; ?>" class="rounded-circle" style="width: 20%; height: 20%" />
+    
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">
@@ -37,7 +37,7 @@
                 Email Adress: <?php echo $_POST['email'];  ?>
             </p>
             <p class="card-text">
-                Contact Number: <?php echo $_POST['phone'];  ?>
+                Contact Number: <?php echo $_POST['contact'];  ?>
             </p>
     
         </div>
