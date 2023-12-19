@@ -6,6 +6,14 @@ $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
+//$host = 'sql101.infinityfree.com';
+//$db = 'if0_35407295_attendee';
+//$user = 'if0_35407295';
+//$pass = '1LnCUKaXBgX2';
+//$charset = 'utf8mb4';
+
+
+
 $dsn = "mysql:host=$host; dbname=$db; charset=$charset";
 
 try { 
